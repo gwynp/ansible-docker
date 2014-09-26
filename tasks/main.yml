@@ -1,0 +1,20 @@
+- name: install pycurl
+  apt: pkg=python-pycurl state=present
+
+- name: install docker apt-key
+  apt_key: url=https://get.docker.io/gpg state=present
+
+- name: enable docker repo
+  apt_repository: repo='deb http://get.docker.io/ubuntu docker main' state=present
+
+- name: install the required packages
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items: 
+   - linux-image-extra-{{ ansible_kernel }}
+   - lxc-docker
+
+- name: update ufw to allow forwarding
+  lineinfile: dest=/etc/default/ufw regexp=DEFAULT_FORWARD_POLICY= line=DEFAULT_FORWARD_POLICY="ACCEPT"
+
+#- name: reload ufw
+#  ufw: state=reload
