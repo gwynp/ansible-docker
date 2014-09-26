@@ -16,5 +16,5 @@
 - name: update ufw to allow forwarding
   lineinfile: dest=/etc/default/ufw regexp=DEFAULT_FORWARD_POLICY= line=DEFAULT_FORWARD_POLICY="ACCEPT"
 
-#- name: reload ufw
-#  ufw: state=reload
+- name: reload ufw
+  ufw: state=reload
